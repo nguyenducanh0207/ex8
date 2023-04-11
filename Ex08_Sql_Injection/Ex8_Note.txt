@@ -1,0 +1,60 @@
+1. Sql injection
+
+- SQL injection là một kỹ thuật chèn mã có thể phá hủy cơ sở dữ liệu của bạn
+- SQL injection là một trong những kỹ thuật hack web phổ biến nhất.
+- SQL injection là vị trí của mã độc hại trong các câu lệnh SQL, thông qua đầu vào trang web.
+- SQL Injection là một kỹ thuật lợi dụng những lỗ hổng về câu truy vấn lấy dữ liệu của những website không an toàn trên web, 
+  đây là một kỹ thuật tấn công rất phổ biến và sự thành công của nó cũng tương đối cao.
+
+*Cách phòng chống:
+- Lọc dữ liệu từ người: Cách phòng chống này tương tự như XSS. Ta sử dụng filter để lọc các kí tự đặc biệt (; ” ‘) hoặc 
+  các từ khoá (SELECT, UNION) do người dùng nhập vào. Nên sử dụng thư viện/function được cung cấp bởi framework. 
+  Viết lại từ đầu vừa tốn thời gian vừa dễ sơ sót.
+- Không cộng chuỗi để tạo sql: Sử dụng parameter thay vì cộng chuỗi. Nếu dữ liệu truyền vào không hợp pháp, 
+  SQL Engine sẽ tự động báo lỗi, ta không cần dùng code để check.
+- Không hiển thị exception, message lỗi: Hacker dựa vào message lỗi để tìm ra cấu trúc database. 
+  Khi có lỗi, ta chỉ hiện thông báo lỗi chứ đừng hiển thị đầy đủ thông tin về lỗi, tránh hacker lợi dụng.
+- Phân quyền rõ ràng trong DB: Nếu chỉ truy cập dữ liệu từ một số bảng, hãy tạo một account trong DB, 
+  gán quyền truy cập cho account đó chứ đừng dùng account root hay sa. 
+- Backup dữ liệu thường xuyên: Dữ liệu phải thường xuyên được backup để nếu có bị hacker xoá thì ta vẫn có thể khôi phục được.
+2. XSS
+
+- Tấn công XSS là một đoạn mã độc, để khái thác một lỗ hổng XSS, hacker sẽ chèn mã độc thông qua các đoạn script để thực thi chúng ở phía Client. 
+  Thông thường, các cuộc tấn công XSS được sử dụng để vượt qua truy cập và mạo danh người dùng.
+- Mục đích chính của cuộc tấn công này là ăn cắp dữ liệu nhận dạng của người dùng như: cookies, session tokens và các thông tin khác
+
+*Cách phòng chống:
+- Data validation
+- Filtering
+- Escaping
+
+3. CSRF
+
+- CSRF ( Cross Site Request Forgery) là kỹ thuật tấn công bằng cách sử dụng quyền chứng thực của người dùng đối với một website. 
+  CSRF là kỹ thuật tấn công vào người dùng, dựa vào đó hacker có thể thực thi những thao tác phải yêu cầu sự chứng thực.  
+  Hiểu một cách nôm na, đây là kỹ thuật tấn công dựa vào mượn quyền trái phép.
+*Cách phòng chống:
+- Phía user:
+	+ Nên thoát khỏi các website quan trọng: Tài khoản ngân hàng, thanh toán trực tuyến, các mạng xã hội, gmail, yahoo… 
+	  khi đã thực hiện xong giao dịch hay các công việc cần làm. (Check - email, checkin…)
+	+ Không nên click vào các đường dẫn mà bạn nhận được qua email, qua facebook … 
+	  Khi bạn đưa chuột qua 1 đường dẫn, phía dưới bên trái của trình duyệt thường có địa chỉ website đích, bạn nên lưu ý để đến đúng trang mình muốn.
+	+ Không lưu các thông tin về mật khẩu tại trình duyệt của mình (không nên chọn các phương thức "đăng nhập lần sau", "lưu mật khẩu" …
+	+ Trong quá trình thực hiện giao dịch hay vào các website quan trọng không nên vào các website khác, có thể chứa các mã khai thác của kẻ tấn công.
+- Phía server:
+	+ Lựa chọn việc sử dụng GET VÀ POST, Nếu ứng dụng của bạn theo chuẩn RESTful, bạn có thể dùng thêm các HTTP verbs, như PATCH, PUT hay DELETE
+ 	+ Sử dụng captcha, các thông báo xác nhận
+	+ Sử dụng token
+	+ Sử dụng cookie riêng biệt cho trang quản trị
+	+ Kiểm tra REFERRER
+	+ Kiểm tra IP
+
+4.Cách phòng chống của Spring
+
+*Đối với sql injection 
+	- Spring hỗ trợ sử dụng parameter,ORM (Object Relational Mapping)
+*Đối với XSS:
+	- Spring có hỗ trợ trình xác thực Hibernate qua @Valid cho tất cả các đối tượng nhập
+	- Sử dụng Content Security Policy (CSP)
+*Đối với CSRF: 
+	- Sử dụng annotation @EnableWebSecurity thì CSRF token sẽ tự động được thêm vào các input field ẩn

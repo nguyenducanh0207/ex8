@@ -1,0 +1,3 @@
+*Cách phòng chống:
+- Không truyền dữ liệu theo kiểu nối chuỗi, thay vào đó sẽ truyền dữ liệu theo kiểu param
+- Sử dụng ORM (Object Relational Mapping)
