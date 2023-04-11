@@ -1,0 +1,8 @@
+*jwt
+- jwt (json web token) là một chuẩn mở (RFC7519) định nghĩa một cách nhỏ gọn và khép kín để truyền một cách an toàn
+thông tin giữa các bên dưới dạng đối tượng json.	
+- JSON Web Token bao gồm 3 phần, được ngăn cách nhau bởi dấu chấm (.)
+	+ Header: sẽ chứa kiểu dữ liệu, và thuật toán sử dụng để mã hoá chuỗi jwt
+	+ Payload: sẽ chứa thông tin mình muốn đặt trong chuỗi Token như usename, userId, author...
+	+ Signature: phần này sẽ được tạo ra bằng mã hoá phần header, payload kèm theo 1 chuỗi secret.
+
